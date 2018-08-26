@@ -82,7 +82,6 @@ namespace GenomeSequencing
             //concate the 2 full fragments if there has been no match
             if (overlap == 0)
             {
-                //no overlap found, just concatenate the 2 fragments
                 mergedFragment = fragmentA + fragmentB;
             }
 

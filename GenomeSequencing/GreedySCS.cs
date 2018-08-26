@@ -10,11 +10,11 @@ namespace GenomeSequencing
     public class GreedySCS
     {
 
-        private static List<string> fragmentCollection;
+        private List<string> fragmentCollection;
 
-        public GreedySCS(List<string> list) //fragmentCollection)
+        public GreedySCS(List<string> fragmentCollection)
         {
-            fragmentCollection = list;
+            this.fragmentCollection = fragmentCollection;
         }
 
 
@@ -30,14 +30,14 @@ namespace GenomeSequencing
                 var result = maxFinder.FindMaxOverlap();
                 //delete item2 first because it will always be higher index that item1
                 //else get bug where item1 deleted then the indexes of the list change and deleting index item2
-                //is not the right index anymore cause the indexes have changed after the list size changed
+                //is not the right index anymore because the indexes have changed after the first item removal
                 fragmentCollection.RemoveAt(result.Item2);
                 fragmentCollection.RemoveAt(result.Item1);
 
                 fragmentCollection.Add(result.Item3);
             }
 
-
+            //FIXME better way of doing this?
             return string.Join(" ", fragmentCollection.ToArray());
         }
     }

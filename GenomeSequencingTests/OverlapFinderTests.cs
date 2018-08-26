@@ -12,16 +12,16 @@ namespace GenomeSequencing.Tests
     public class OverlapFinderTests
     {
         [TestMethod()]
-        public void  ABTest()
+        public void OverlapFinder_PostfixMatchesPrefix()
         {
             //Arrange
-            string fragmentA = "all is well";
-            string fragmentB = "ell that end";
-            int expectedOverlap = 3;
-            string expectedMergedString = "all is well that end";
+            string firstString = "abij";
+            string secondString = "ijxy";
+            int expectedOverlap = 2;
+            string expectedMergedString = "abijxy";
 
             //Act
-            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(fragmentA, fragmentB);
+            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(firstString, secondString);
             var result = finder.FindOverlap();
 
             //Assert
@@ -32,16 +32,16 @@ namespace GenomeSequencing.Tests
 
 
         [TestMethod()]
-        public void BATest()
+        public void OverlapFinder_PrefixMatchesPostfix()
         {
             //Arrange
-            string fragmentA = "t ends well";
-            string fragmentB = "ell that en";
-            int expectedOverlap = 4;
-            string expectedMergedString = "ell that ends well";
+            string firstString = "abij";
+            string secondString = "xyab";
+            int expectedOverlap = 2;
+            string expectedMergedString = "xyabij";
 
             //Act
-            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(fragmentA, fragmentB);
+            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(firstString, secondString);
             var result = finder.FindOverlap();
 
             //Assert
@@ -52,35 +52,35 @@ namespace GenomeSequencing.Tests
 
 
         [TestMethod()]
-        public void CompleteContainABTest()
+        public void OverlapFinder_firstStringContainsSecondString()
         {
             //Arrange
-            string fragmentA = "s well tha";
-            string fragmentB = "ell";
-            int expectedOverlap = 3;
-            string expectedMergedString = "s well tha";
-
-            //Act
-            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(fragmentA, fragmentB);
-            var result = finder.FindOverlap();
-
-            //Assert
-            Assert.AreEqual(expectedOverlap, result.Item1);
-            Assert.AreEqual(expectedMergedString, result.Item2);
-
-        }
-
-        [TestMethod()]
-        public void CompleteContainBATest()
-        {
-            //Arrange
-            string fragmentA = "ell";
-            string fragmentB = "s well tha";
+            string firstString = "s well tha";
+            string secondString = "ell";
             int expectedOverlap = 3;
             string expectedMergedString = "s well tha";
 
             //Act
-            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(fragmentA, fragmentB);
+            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(firstString, secondString);
+            var result = finder.FindOverlap();
+
+            //Assert
+            Assert.AreEqual(expectedOverlap, result.Item1);
+            Assert.AreEqual(expectedMergedString, result.Item2);
+
+        }
+
+        [TestMethod()]
+        public void OverlapFinder_SecondStringContainsFirstString()
+        {
+            //Arrange
+            string firstString = "ell";
+            string secondString = "s well tha";
+            int expectedOverlap = 3;
+            string expectedMergedString = "s well tha";
+
+            //Act
+            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(firstString, secondString);
             var result = finder.FindOverlap();
 
             //Assert
@@ -91,16 +91,16 @@ namespace GenomeSequencing.Tests
 
 
         [TestMethod()]
-        public void BothSideMatchEquallyABTest()
+        public void OverlapFinder_BothWayMatchEqually()
         {
             //Arrange
-            string fragmentA = "abxy";
-            string fragmentB = "xyab";
+            string firstString = "abxy";
+            string secondString = "xyab";
             int expectedOverlap = 2;
             string expectedMergedString = "abxyab";
 
             //Act
-            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(fragmentA, fragmentB);
+            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(firstString, secondString);
             var result = finder.FindOverlap();
 
             //Assert
@@ -110,16 +110,16 @@ namespace GenomeSequencing.Tests
         }
 
         [TestMethod()]
-        public void BothSideMatchEquallyBATest()
+        public void OverlapFinder_BothWayMatchUnequal()
         {
             //Arrange
-            string fragmentA = "xyab";
-            string fragmentB = "abxy";
-            int expectedOverlap = 2;
-            string expectedMergedString = "xyabxy";
+            string firstString = "xyzab";
+            string secondString = "abxyz";
+            int expectedOverlap = 3;
+            string expectedMergedString = "abxyzab";
 
             //Act
-            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(fragmentA, fragmentB);
+            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(firstString, secondString);
             var result = finder.FindOverlap();
 
             //Assert
@@ -133,13 +133,13 @@ namespace GenomeSequencing.Tests
         public void NoMatchTest()
         {
             //Arrange
-            string fragmentA = "abc";
-            string fragmentB = "xyz";
+            string firstString = "abc";
+            string secondString = "xyz";
             int expectedOverlap = 0;
             string expectedMergedString = "abcxyz";
 
             //Act
-            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(fragmentA, fragmentB);
+            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(firstString, secondString);
             var result = finder.FindOverlap();
 
             //Assert
