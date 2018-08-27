@@ -13,9 +13,14 @@ namespace GenomeSequencing
 
         private List<string> fragmentCollection;
 
+        //track the max overlap as we find overlap between fragment pairs
         private int maxOverlap = 0;
+
+        //indexes of the strings in the collection that have the max overlap
         private int index1 = 0;
         private int index2 = 0;
+
+        //the merged string of the overlaped string fragments
         private string mergedFragment = null;
 
 

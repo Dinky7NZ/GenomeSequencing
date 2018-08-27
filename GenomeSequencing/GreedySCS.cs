@@ -24,6 +24,8 @@ namespace GenomeSequencing
         /// <returns>The string that represents the Shortest Common Superstring</returns>
         public string GetGreedySCS()
         {
+            //while there is more than 1 string in the collection we match and merge.
+            //when there is 1 string left in the collection, that is Shortest Common Superstring
             while (fragmentCollection.Count > 1)
             {
                 MaxOverlapFinder maxFinder = new MaxOverlapFinder(fragmentCollection);
