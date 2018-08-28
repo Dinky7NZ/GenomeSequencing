@@ -49,6 +49,27 @@ namespace GenomeSequencing.Tests
         }
 
 
+        [TestMethod()]
+        public void GetGreedySCS_ResultContainsAllSubstringsLargerInputSize()
+        {
+            //created a 50char dna string and created multiple copies then cut each randomly and set as input collection.
+        
+            //Arrange
+            string[] input = { "actgag", "tcctagga", "gctctaaatcgctat", "cgtacgtac", "gtcttctatct", "actg", "agt", "cctaggagctc", "taaatcgct", "a", "tcgta", "cgtacgt", "cttctatct", "actgagt", "cctaggagctc", "taaatcg", "ctatcgtacgtacgtct", "tctatct", "actga", "gtcctaggagc", "tctaaatcgctat", "cgtacgtacgtc", "ttctatct", "actg", "agtcctaggagctctaaat", "cgctatcgtacgtacg", "tcttct", "atct", "actgagtcctaggagc", "tctaaatcgctatcgta", "cgtacgtcttctatct", "actgagt", "cctaggag", "ctctaaat", "cgctatcg", "tacgtacgt", "cttctatct" };
+            List<string> collection = new List<string>(input);
+            string expectedSCS = "actgagtcctaggagctctaaatcgctatcgtacgtacgtcttctatct";
+
+            //Act
+            GenomeSequencing.GreedySCS greedySCS = new GenomeSequencing.GreedySCS(collection);
+            string result = greedySCS.GetGreedySCS();
+
+            //Assert
+            foreach (var fragment in collection)
+            {
+                Assert.IsTrue(expectedSCS.Contains(fragment));
+            }
+
+        }
 
     }
 }

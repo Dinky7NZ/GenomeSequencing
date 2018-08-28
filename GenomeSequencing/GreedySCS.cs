@@ -30,13 +30,21 @@ namespace GenomeSequencing
             {
                 MaxOverlapFinder maxFinder = new MaxOverlapFinder(fragmentCollection);
                 var result = maxFinder.FindMaxOverlap();
-                //delete item2 first because it will always be higher index that item1
-                //else get bug where item1 deleted then the indexes of the list change and deleting index item2
-                //is not the right index anymore because the indexes have changed after the first item removal
-                fragmentCollection.RemoveAt(result.Item2);
-                fragmentCollection.RemoveAt(result.Item1);
 
-                fragmentCollection.Add(result.Item3);
+                try
+                {
+                    //delete item2 first because it will always be higher index that item1
+                    //else get bug where item1 deleted then the indexes of the list change and deleting index item2
+                    //is not the right index anymore because the indexes have changed after the first item removal
+                    fragmentCollection.RemoveAt(result.Item2);
+                    fragmentCollection.RemoveAt(result.Item1);
+                    fragmentCollection.Add(result.Item3);
+                }
+                catch (IndexOutOfRangeException e)
+                {
+                    Console.WriteLine("Error removing or adding from the collection. " + e.Message);
+                }
+                
             }
 
             //FIXME better way of doing this?

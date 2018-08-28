@@ -52,7 +52,7 @@ namespace GenomeSequencing.Tests
 
 
         [TestMethod()]
-        public void OverlapFinder_firstStringContainsSecondString()
+        public void OverlapFinder_FirstStringContainsSecondString()
         {
             //Arrange
             string firstString = "s well tha";
@@ -128,6 +128,105 @@ namespace GenomeSequencing.Tests
 
         }
 
+
+        [TestMethod()]
+        public void OverlapFinder_FirstStringNull()
+        {
+            //Arrange
+            string firstString = "";
+            string secondString = "abc";
+            int expectedOverlap = 0;
+            string expectedMergedString = "abc";
+
+            //Act
+            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(firstString, secondString);
+            var result = finder.FindOverlap();
+
+            //Assert
+            Assert.AreEqual(expectedOverlap, result.Item1);
+            Assert.AreEqual(expectedMergedString, result.Item2);
+
+        }
+
+
+        [TestMethod()]
+        public void OverlapFinder_SecondStringNull()
+        {
+            //Arrange
+            string firstString = "abc";
+            string secondString = "";
+            int expectedOverlap = 0;
+            string expectedMergedString = "abc";
+
+            //Act
+            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(firstString, secondString);
+            var result = finder.FindOverlap();
+
+            //Assert
+            Assert.AreEqual(expectedOverlap, result.Item1);
+            Assert.AreEqual(expectedMergedString, result.Item2);
+
+        }
+
+
+        [TestMethod()]
+        public void OverlapFinder_FirstStringOneCharLong()
+        {
+            //Arrange
+            string firstString = "a";
+            string secondString = "abc";
+            int expectedOverlap = 1;
+            string expectedMergedString = "abc";
+
+            //Act
+            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(firstString, secondString);
+            var result = finder.FindOverlap();
+
+            //Assert
+            Assert.AreEqual(expectedOverlap, result.Item1);
+            Assert.AreEqual(expectedMergedString, result.Item2);
+
+        }
+
+
+        [TestMethod()]
+        public void OverlapFinder_SecondStringOneCharLong()
+        {
+            //Arrange
+            string firstString = "abc";
+            string secondString = "a";
+            int expectedOverlap = 1;
+            string expectedMergedString = "abc";
+
+            //Act
+            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(firstString, secondString);
+            var result = finder.FindOverlap();
+
+            //Assert
+            Assert.AreEqual(expectedOverlap, result.Item1);
+            Assert.AreEqual(expectedMergedString, result.Item2);
+
+        }
+
+
+        [TestMethod()]
+        public void OverlapFinder_SecondStringOneCharLongMiddleMatch()
+        {
+            //Arrange
+            string firstString = "abc";
+            string secondString = "b";
+            int expectedOverlap = 1;
+            string expectedMergedString = "abc";
+
+            //Act
+            GenomeSequencing.OverlapFinder finder = new GenomeSequencing.OverlapFinder(firstString, secondString);
+            var result = finder.FindOverlap();
+
+            //Assert
+            Assert.AreEqual(expectedOverlap, result.Item1);
+            Assert.AreEqual(expectedMergedString, result.Item2);
+
+        }
 
         [TestMethod()]
         public void NoMatchTest()

@@ -22,7 +22,7 @@ namespace GenomeSequencing
 
         /// <summary>
         /// Method that finds the overlap of 2 strings
-        /// TODO break out each of the checks as separate methods for tidier code
+        /// TODO break out each of the checks as separate methods for more modular code
         /// </summary>
         /// <returns>A tuple containing the max size of the overlap and the merged strings</returns>
         public Tuple<int, string> FindOverlap()
@@ -31,10 +31,19 @@ namespace GenomeSequencing
             string mergedFragment = null;
 
             //originally had this inside the for loop but is inefficient because it will calculate the min length each time. this will be faster
-            int minStringLen = Math.Min(fragmentA.Length, fragmentB.Length);
+            int minLen = Math.Min(fragmentA.Length, fragmentB.Length);
+
+            //if either fragment is null then return the merged fragments without any action.
+            //This will be more efficient than running thorugh the code which will return the same thing.
+            //NOTE: Could choose to treat as exception. If so throw exception in the constructor and don't wait till getting here.
+            if (minLen == 0)
+            {
+                mergedFragment = fragmentA + fragmentB;
+                return Tuple.Create(overlap, mergedFragment);
+            }
 
             //check the postfix of a with prefix of b to find overlap
-            for (int i = 1; i < minStringLen; i++)
+            for (int i = 1; i < minLen; i++)
             {
                 //compare the last i chars of fragmentA with the first i chars of fragmentB
                 if (string.Compare(fragmentA.Substring(fragmentA.Length - i, i), fragmentB.Substring(0, i)) == 0)
@@ -42,14 +51,12 @@ namespace GenomeSequencing
                     //there is a match, record the overlap and merged string.
                     overlap = i;
                     mergedFragment = fragmentA + fragmentB.Substring(i);
-
-
                 }
 
             }
 
             //check the prefix of fragmentA with the postfix of fragmentB to find overlap
-            for (int i = 1; i < minStringLen; i++)
+            for (int i = 1; i < minLen; i++)
             {
                 //compare the last i chars of fragmentA with the first i chars of fragmentA
                 if (string.Compare(fragmentB.Substring(fragmentB.Length - i, i), fragmentA.Substring(0, i)) == 0)
